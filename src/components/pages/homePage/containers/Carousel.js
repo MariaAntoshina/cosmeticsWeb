@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Paper, Typography, Button, IconButton } from '@mui/material';
+import { Typography, Button, IconButton } from '@mui/material';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
 
 
@@ -7,6 +7,7 @@ import { ArrowBack, ArrowForward } from '@mui/icons-material';
 import image1 from '../../../../resources/imgs/original-GLOBAL_PRIMARY_BANNER_(Desktop)_(2)-111543.avif'
 import image2 from '../../../../resources/imgs/original-GR_Desktop-034204.avif'
 import image3 from '../../../../resources/imgs/original-Tilbury_Desktop-033316.avif'
+import Box from "@mui/material/Box";
 
 
 const images = [image1, image2, image3];
@@ -24,9 +25,9 @@ const SimpleCarousel = () => {
 
     return (
         <div style={{  margin: 'auto' }}>
-            <Paper>
+            <Box>
                 <img src={images[currentSlide]} alt={`Slide ${currentSlide + 1}`} style={{ width: '100%' }} />
-            </Paper>
+            </Box>
             <div style={{ padding: '20px' }}>
                 <Typography variant="h5">Slide {currentSlide + 1}</Typography>
                 <Typography variant="body1">
