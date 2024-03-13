@@ -1,7 +1,5 @@
-import ThreePalettesContainer from "./ThreePalettesContainer";
-import {Fragment} from "react";
 import Box from "@mui/material/Box";
-
+import ThreePalettesContainer from "../../palettePage/containers/ThreePalettesContainer";
 
 const array = [
     {
@@ -51,43 +49,46 @@ const array = [
 ]
 
 
-export const PaletteFeed = () => {
+export const PowderFeed = () => {
 
     const breakDataIntoPortions = (array) => {
 
         let result = [];
-
-        let threePalettes = [];
+        let threePowders = [];
 
         for (let i = 0; i < array.length; i++) {
-            let arrayElement = array[i];
+            let arrElem = array[i];
 
             if ((i + 1) % 3 === 0) {
-                threePalettes.push(arrayElement);
-                result.push(threePalettes);
-                threePalettes = [];
-            } else {
+                threePowders.push(arrElem);
+                result.push(threePowders);
+                threePowders = [];
 
-                threePalettes.push(arrayElement);
+            } else {
+                threePowders.push(arrElem);
+
                 if (i === array.length - 1) {
-                    result.push(threePalettes);
+                    result.push(threePowders)
+
                 }
             }
         }
+
         return result;
     }
 
-    const onDelete = (id) => {
-        //impl
+    const onDelete = (id) =>{
+
     }
 
-    let data = breakDataIntoPortions(array);
+    let data = breakDataIntoPortions(array)
 
     return <Box maxHeight={'80vh'} overflow={'scroll'}>
         {
             data.map(i => {
-                return <ThreePalettesContainer threePalettesArray={i} onDelete={onDelete}/>
+                return <ThreePowderContainer threePowderArray={i} onDelete={onDelete}/>
             })
         }
     </Box>
+
 }

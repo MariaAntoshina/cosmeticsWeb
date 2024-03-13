@@ -9,6 +9,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import {useState} from "react";
 import {Drawer, List, ListItemButton, ListItemText} from "@mui/material";
 import {makeStyles } from '@material-ui/core/styles';
+import {ENDPOINTS} from "../../constants";
 
 
 
@@ -91,10 +92,10 @@ export default function HeaderAppBar() {
             >
 
                 <List>
-                    <ListItemButton onClick={() => handleClick('home')}>
+                    <ListItemButton onClick={() => handleClick(ENDPOINTS.HOME)}>
                         <ListItemText primary="Home" />
                     </ListItemButton>
-                    <ListItemButton onClick={() => handleClick('palettes')}>
+                    <ListItemButton onClick={() => handleClick(ENDPOINTS.PALETTES)}>
                         <ListItemText primary="Palettes" />
                     </ListItemButton>
                     <ListItemButton onClick={() => handleClick('powders')}>
