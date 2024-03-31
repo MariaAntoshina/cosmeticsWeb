@@ -1,7 +1,5 @@
 import React from 'react';
-import {Card, CardContent, CardMedia, Typography, Button, CardActions, Grid} from '@mui/material';
-import {PaletteBox} from "./containers/PaletteBox";
-import ThreePalettesContainer from "./containers/ThreePalettesContainer";
+import {Grid} from '@mui/material';
 import {Filter} from "./containers/Filter";
 import {PaletteFeed} from "./containers/PaletteFeed";
 

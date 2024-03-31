@@ -1,16 +1,16 @@
 import {Grid} from "@mui/material";
-import {PaletteBox} from "./PaletteBox";
+import {FoundationBox} from "./FoundationBox";
 
-const ThreePalettesContainer = ({threePalettesArray, onDelete}) => {
+export const ThreeFoundationsContainer = ({threeFoundationsArray, onDelete}) => {
 
     return (
 
         <Grid container spacing={2} paddingBottom={4}>
 
-            {threePalettesArray.map(i => {
+            {threeFoundationsArray.map(i => {
 
-                return <Grid item xs={4} key={i.id}>
-                    <PaletteBox
+                return <Grid item xs={4}>
+                    <FoundationBox
                         name={i.name}
                         description={i.description}
                         image={i.image}
@@ -23,5 +23,3 @@ const ThreePalettesContainer = ({threePalettesArray, onDelete}) => {
         </Grid>
     );
 };
-
-export default ThreePalettesContainer;

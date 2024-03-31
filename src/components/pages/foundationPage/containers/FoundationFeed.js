@@ -1,5 +1,6 @@
-import Box from "@mui/material/Box";
-import ThreePowdersContainer from "../../powderPage/containers/ThreePowdersContainer";
+import {ThreeFoundationsContainer} from "./ThreeFoundationsContainer";
+import React from "react";
+import {Box} from '@mui/material'
 
 const array = [
     {
@@ -48,45 +49,41 @@ const array = [
     },
 ]
 
-
-export const PowderFeed = () => {
-
+export const FoundationFeed = () => {
     const breakDataIntoPortions = (array) => {
 
-        let result = [];
-        let threePowders = [];
+        let result = []
+        let threeFoundations = [];
+
 
         for (let i = 0; i < array.length; i++) {
-            let arrElem = array[i];
+            let arrayElement = array[i];
 
             if ((i + 1) % 3 === 0) {
-                threePowders.push(arrElem);
-                result.push(threePowders);
-                threePowders = [];
-
+                threeFoundations.push(arrayElement);
+                result.push(threeFoundations);
+                threeFoundations = [];
             } else {
-                threePowders.push(arrElem);
-
+                threeFoundations.push(arrayElement);
                 if (i === array.length - 1) {
-                    result.push(threePowders)
-
+                    result.push(threeFoundations);
                 }
             }
         }
-
         return result;
     }
 
-    const onDelete = (id) =>{
+
+    const onDelete = (id) => {
 
     }
 
-    let data = breakDataIntoPortions(array)
+    let data = breakDataIntoPortions(array);
 
     return <Box maxHeight={'80vh'} overflow={'scroll'}>
         {
             data.map(i => {
-                return <ThreePowdersContainer threePowdersArray={i} onDelete={onDelete}/>
+                return <ThreeFoundationsContainer threeFoundationsArray={i} onDelete={onDelete()}/>
             })
         }
     </Box>

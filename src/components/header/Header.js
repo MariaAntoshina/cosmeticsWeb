@@ -98,8 +98,11 @@ export default function HeaderAppBar() {
                     <ListItemButton onClick={() => handleClick(ENDPOINTS.PALETTES)}>
                         <ListItemText primary="Palettes" />
                     </ListItemButton>
-                    <ListItemButton onClick={() => handleClick('powders')}>
+                    <ListItemButton onClick={() => handleClick(ENDPOINTS.POWDERS)}>
                         <ListItemText primary="Powders" />
+                    </ListItemButton>
+                    <ListItemButton onClick={() => handleClick(ENDPOINTS.FOUNDATIONS)}>
+                        <ListItemText primary="Foundations" />
                     </ListItemButton>
                 </List>
             </Drawer>
