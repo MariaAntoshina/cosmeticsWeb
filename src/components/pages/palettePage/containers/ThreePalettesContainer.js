@@ -1,7 +1,7 @@
 import {Grid} from "@mui/material";
 import {PaletteBox} from "./PaletteBox";
 
-const ThreePalettesContainer = ({threePalettesArray, onDelete}) => {
+const ThreePalettesContainer = ({threePalettesArray, onDelete, handleEdit}) => {
 
     return (
 
@@ -17,6 +17,7 @@ const ThreePalettesContainer = ({threePalettesArray, onDelete}) => {
                         price={i.price}
                         id={i.id}
                         onDelete={onDelete}
+                        handleEdit={handleEdit}
                     />
                 </Grid>
             })}

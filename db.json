@@ -1,33 +1,25 @@
 {
-  "palettes":  [
+  "palettes": [
     {
-      "name": "name 1",
-      "description": "a few words",
+      "id": 7,
+      "name": "name 3333",
       "image": "https://media.istockphoto.com/id/1455658894/fi/valokuva/j%C3%A4rjestelm%C3%A4n-hakkeroidun-varoituksen-h%C3%A4lytys-kannettavassa-tietokoneessa-kyberhy%C3%B6kk%C3%A4ys.jpg?s=2048x2048&w=is&k=20&c=77wBp9WBf9W0ev729L4o4VbA08OlGrdEyMwZorEYa4c=",
-      "price": "20",
-      "id": 1
+      "description": "a few words",
+      "price": "9"
     },
     {
+      "id": 8,
       "name": "name 2",
-      "description": "a few words",
       "image": "https://media.istockphoto.com/id/1455658894/fi/valokuva/j%C3%A4rjestelm%C3%A4n-hakkeroidun-varoituksen-h%C3%A4lytys-kannettavassa-tietokoneessa-kyberhy%C3%B6kk%C3%A4ys.jpg?s=2048x2048&w=is&k=20&c=77wBp9WBf9W0ev729L4o4VbA08OlGrdEyMwZorEYa4c=",
-      "price": "20",
-      "id": 2
+      "description": "a few words",
+      "price": "23"
     },
     {
       "name": "name 3",
       "description": "a few words",
       "image": "https://media.istockphoto.com/id/1455658894/fi/valokuva/j%C3%A4rjestelm%C3%A4n-hakkeroidun-varoituksen-h%C3%A4lytys-kannettavassa-tietokoneessa-kyberhy%C3%B6kk%C3%A4ys.jpg?s=2048x2048&w=is&k=20&c=77wBp9WBf9W0ev729L4o4VbA08OlGrdEyMwZorEYa4c=",
       "price": "20",
-      "id": 3
-    },
-    {
-      "name": "name 4",
-      "description": "a few words",
-      "image": "https://media.istockphoto.com/id/1455658894/fi/valokuva/j%C3%A4rjestelm%C3%A4n-hakkeroidun-varoituksen-h%C3%A4lytys-kannettavassa-tietokoneessa-kyberhy%C3%B6kk%C3%A4ys.jpg?s=2048x2048&w=is&k=20&c=77wBp9WBf9W0ev729L4o4VbA08OlGrdEyMwZorEYa4c=",
-      "price": "20",
-      "id": 4
+      "id": 9
     }
   ]
 }
-

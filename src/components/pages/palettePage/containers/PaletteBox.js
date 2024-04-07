@@ -1,7 +1,7 @@
 import {Button, Card, CardActions, CardContent, CardMedia, Typography} from "@mui/material";
 import React from "react";
 
-export const PaletteBox = ({name, image, description, price, id, onEdit, onDelete}) => {
+export const PaletteBox = ({name, image, description, price, id, handleEdit, onDelete}) => {
 
     return <Card style={{ maxWidth: 300 }}>
         <CardMedia component="img" image={image} alt={name} />
@@ -17,7 +17,7 @@ export const PaletteBox = ({name, image, description, price, id, onEdit, onDelet
             </Typography>
         </CardContent>
         <CardActions>
-            <Button size="small" onClick={() => onEdit(id)}>
+            <Button size="small" onClick={() => handleEdit({id, name, image, description, price})}>
                 Edit
             </Button>
             <Button size="small" onClick={() => onDelete(id)}>

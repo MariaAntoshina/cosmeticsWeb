@@ -1,16 +1,28 @@
 import ThreePalettesContainer from "./ThreePalettesContainer";
 import Box from "@mui/material/Box";
-import {useGetPalettesQuery} from "../../../../api/paltteApi";
+import {useDeleteDataMutation, useGetPalettesQuery} from "../../../../api/paltteApi";
 
 
-export const PaletteFeed = () => {
 
-    const { data, error, isLoading, isSuccess } = useGetPalettesQuery();
 
-    console.log('isLoading', isLoading)
-    console.log('error', error)
-    console.log('isSuccess', isSuccess)
-    console.log('data', data)
+export const PaletteFeed = ({handleEdit, filterCriteria}) => {
+
+
+    const { data, isSuccess } = useGetPalettesQuery();
+    const [deleteData] = useDeleteDataMutation();
+
+    const filterData = (criteria, data) => {
+
+        if (!criteria.price['1-10'] && !criteria.price['11-20'] && !criteria.price['21-50']) {
+            return data;
+        }
+
+        return data.filter(d =>
+            (criteria.price['1-10'] && (1 < d.price && d.price <= 10)) ||
+            (criteria.price['11-20'] && (11 < d.price && d.price <= 20)) ||
+            (criteria.price['21-50'] && (21 < d.price && d.price <= 50)))
+    }
+
 
     const breakDataIntoPortions = (array) => {
 
@@ -37,15 +49,16 @@ export const PaletteFeed = () => {
     }
 
     const onDelete = (id) => {
-
+        deleteData(id);
     }
+
 
     let palettesData;
 
     if(isSuccess === false){
         palettesData = []
     } else {
-        palettesData = breakDataIntoPortions(data)
+        palettesData = breakDataIntoPortions(filterData(filterCriteria, data));
     }
 
     return <Box maxHeight={'80vh'} overflow={'scroll'}>
@@ -54,6 +67,7 @@ export const PaletteFeed = () => {
                 return <ThreePalettesContainer
                     threePalettesArray={i}
                     onDelete={onDelete}
+                    handleEdit = {handleEdit}
                     key = {k}/>
             })
         }
