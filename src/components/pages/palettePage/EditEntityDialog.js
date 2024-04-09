@@ -1,11 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import {TextField, Button, DialogTitle, DialogContentText, Dialog, DialogContent} from '@mui/material';
+import {TextField, Button, DialogTitle, DialogContentText, Dialog, DialogContent, Autocomplete} from '@mui/material';
 import {useEditDataMutation} from "../../../api/paltteApi";
+import {TAG_LIST} from "../../../constants";
 
 function EditEntityDialog({initialData, setUpdateDialogOpened, open}) {
     const [editData] = useEditDataMutation();
 
-    const [newData, setNewData] = useState({name: "", description: "", price: "", image: ""});// еще раз обсудить фигурные скобки
+    const [newData, setNewData] = useState(
+        {
+            name: "",
+            description: "",
+            price: "",
+            image: "",
+            tags: []
+        }
+    );// еще раз обсудить фигурные скобки
 
 //здесь получается, что initialData меняется, мы записываем в setNewData новые измененные данные?
     useEffect(() => {
@@ -23,10 +32,20 @@ function EditEntityDialog({initialData, setUpdateDialogOpened, open}) {
         setNewData(updatedNewData);
     };
 
+    const handleInputChangeInAutocomplete = (fieldName, value) => {
+
+        let updatedNewData = {...newData};
+        updatedNewData[fieldName] = value;
+        setNewData(updatedNewData);
+
+    }
+
     const handleEdit = () => {
         editData(newData);
         setUpdateDialogOpened(!open)
     }
+
+
 
     return (
         <Dialog open={open}>
@@ -67,6 +86,24 @@ function EditEntityDialog({initialData, setUpdateDialogOpened, open}) {
                     value={newData.image}
                     onChange={handleInputChange}
                     fullWidth
+                />
+                <Autocomplete
+                    multiple
+                    id="tags-outlined"
+                    options={TAG_LIST}
+                    getOptionLabel={(option) => option.title}
+                    value={newData.tags ? newData.tags : [] }
+                    onChange={(e, value) =>
+                        handleInputChangeInAutocomplete("tags", value)}
+                    filterSelectedOptions
+                    renderInput={(params) => (
+                        <TextField
+                            margin="dense"
+                            // value={newData.tags}
+                            {...params}
+                            label="Tags"
+                        />
+                    )}
                 />
                 <Button onClick={handleEdit} variant="contained" color="primary">Edit</Button>
                 <Button onClick={() => setUpdateDialogOpened(!open)}>Cancel</Button>

@@ -16,6 +16,7 @@ const ThreePalettesContainer = ({threePalettesArray, onDelete, handleEdit}) => {
                         image={i.image}
                         price={i.price}
                         id={i.id}
+                        tags ={i.tags ? i.tags : []}
                         onDelete={onDelete}
                         handleEdit={handleEdit}
                     />

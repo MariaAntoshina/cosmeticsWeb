@@ -12,6 +12,7 @@ function CreateEntityDialog({ open, setDialogOpened, onCreate }) {
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
     const [image, setImage] = useState('');
+    const [tags, setTags] = useState('');
 
     const handleCancel = () => {
         setDialogOpened(!open);
@@ -27,7 +28,8 @@ function CreateEntityDialog({ open, setDialogOpened, onCreate }) {
             name: name,
             description: description,
             price: price,
-            image: image
+            image: image,
+            tags: tags,
         };
         createData(newEntity);
         // Call the onCreate callback with the new entity
@@ -43,6 +45,7 @@ function CreateEntityDialog({ open, setDialogOpened, onCreate }) {
         setDescription('');
         setPrice('');
         setImage('');
+        setTags('');
     }
 
     return (
@@ -84,6 +87,14 @@ function CreateEntityDialog({ open, setDialogOpened, onCreate }) {
                     fullWidth
                     value={image}
                     onChange={(e) => setImage(e.target.value)}
+                />
+                <TextField
+                    margin="dense"
+                    label="Tags"
+                    type="text"
+                    fullWidth
+                    value={tags}
+                    onChange={(e) => setTags(e.target.value)}
                 />
             </DialogContent>
             <DialogActions>

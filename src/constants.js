@@ -4,3 +4,9 @@ export const ENDPOINTS = {
     POWDERS: '/powders',
     FOUNDATIONS: '/foundations'
 };
+
+
+export const TAG_LIST = [
+    {title: 'Favourite'},
+    {title: 'Expensive'}
+]

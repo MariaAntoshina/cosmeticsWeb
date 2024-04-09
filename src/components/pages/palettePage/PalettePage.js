@@ -21,9 +21,7 @@ function PalettePage() {
     })
     const [dialogOpened, setDialogOpened] = useState(false)
     const [updateDialogOpened, setUpdateDialogOpened] = useState(false)
-    const [initialData, setInitialData] = useState({name: "", description: "", price: "", image: ""});
-
-console.log(filterCriteria)
+    const [initialData, setInitialData] = useState({name: "", description: "", price: "", image: "", tags: ""});
 
     const handleCreate = () => {
         setDialogOpened(true)
