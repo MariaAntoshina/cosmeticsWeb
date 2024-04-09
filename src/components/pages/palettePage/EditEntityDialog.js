@@ -99,7 +99,6 @@ function EditEntityDialog({initialData, setUpdateDialogOpened, open}) {
                     renderInput={(params) => (
                         <TextField
                             margin="dense"
-                            // value={newData.tags}
                             {...params}
                             label="Tags"
                         />
