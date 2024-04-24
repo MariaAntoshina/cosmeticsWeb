@@ -1,13 +1,14 @@
 import {Button, Card, CardActions, CardContent, CardMedia, Chip, Stack, Typography} from "@mui/material";
 import React from "react";
 
-export const PaletteBox = ({name, image, description, price, id, tags, handleEdit, onDelete}) => {
-
-    console.log('tags', tags)
+export const PaletteBox = ({brand, name, image, description, price, id, tags, handleEdit, onDelete}) => {
 
     return <Card style={{ maxWidth: 300 }}>
         <CardMedia component="img" image={image} alt={name} />
         <CardContent>
+            <Typography variant="h6" component="div">
+                {brand[0]?.title}
+            </Typography>
             <Typography variant="h6" component="div">
                 {name}
             </Typography>
@@ -20,15 +21,18 @@ export const PaletteBox = ({name, image, description, price, id, tags, handleEdi
 
             <Stack direction="row" spacing={1}>
                 {
-                    tags.map(tag => {
-                        return <Chip label={tag.title}  />
+                    Array.isArray(tags) && tags.map((tag, id) => {
+                        return <Chip
+                            key={id}
+                            label={tag.title}
+                        />
                     })
                 }
             </Stack>
 
         </CardContent>
         <CardActions>
-            <Button size="small" onClick={() => handleEdit({id, name, image, description, price, tags})}>
+            <Button size="small" onClick={() => handleEdit({id, name, image, description, price, brand, tags})}>
                 Edit
             </Button>
             <Button size="small" onClick={() => onDelete(id)}>

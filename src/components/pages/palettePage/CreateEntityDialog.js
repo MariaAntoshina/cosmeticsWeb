@@ -1,30 +1,37 @@
-import {useState} from "react";
-import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField} from "@mui/material";
+import React, {useState} from "react";
+import {
+    Autocomplete,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    TextField
+} from "@mui/material";
 import Button from "@mui/material/Button";
 import {useCreateDataMutation} from "../../../api/paltteApi";
+import {BRAND_LIST, TAG_LIST} from "../../../constants";
 
 function CreateEntityDialog({ open, setDialogOpened, onCreate }) {
 
     const [createData] = useCreateDataMutation();
 
-
+    const [brand, setBrand] = useState('');
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
     const [image, setImage] = useState('');
-    const [tags, setTags] = useState('');
+    const [tags, setTags] = useState([]);
 
     const handleCancel = () => {
         setDialogOpened(!open);
         clear();
     }
     const handleCreate = () => {
-        // Validate input fields if needed
-
-        // Create the new entity object
         const newEntity = {
             //Todo add id
             // id: uuid()
+            brand: brand,
             name: name,
             description: description,
             price: price,
@@ -32,20 +39,17 @@ function CreateEntityDialog({ open, setDialogOpened, onCreate }) {
             tags: tags,
         };
         createData(newEntity);
-        // Call the onCreate callback with the new entity
-        // onCreate(newEntity);
-
-        // Clear the input fields
         setDialogOpened(!open);
         clear();
     };
 
     const clear = () => {
+        setBrand('');
         setName('');
         setDescription('');
         setPrice('');
         setImage('');
-        setTags('');
+        setTags([]);
     }
 
     return (
@@ -55,6 +59,23 @@ function CreateEntityDialog({ open, setDialogOpened, onCreate }) {
                 <DialogContentText>
                     Please fill out the details of the new entity.
                 </DialogContentText>
+
+                <Autocomplete
+                    id="brand-outlined"
+                    options={BRAND_LIST}
+                    getOptionLabel={(option) => option.title}
+                    value={brand ? brand : [] }
+                    onChange={(e, value) =>
+                        setBrand(value)}
+                    filterSelectedOptions
+                    renderInput={(params) => (
+                        <TextField
+                            margin="dense"
+                            {...params}
+                            label="Brand"
+                        />
+                    )}
+                />
                 <TextField
                     autoFocus
                     margin="dense"
@@ -88,13 +109,22 @@ function CreateEntityDialog({ open, setDialogOpened, onCreate }) {
                     value={image}
                     onChange={(e) => setImage(e.target.value)}
                 />
-                <TextField
-                    margin="dense"
-                    label="Tags"
-                    type="text"
-                    fullWidth
-                    value={tags}
-                    onChange={(e) => setTags(e.target.value)}
+                <Autocomplete
+                    multiple
+                    id="tags-outlined"
+                    options={TAG_LIST}
+                    getOptionLabel={(option) => option.title}
+                    value={tags ? tags : [] }
+                    onChange={(e, value) =>
+                        setTags(value)}
+                    filterSelectedOptions
+                    renderInput={(params) => (
+                        <TextField
+                            margin="dense"
+                            {...params}
+                            label="Tags"
+                        />
+                    )}
                 />
             </DialogContent>
             <DialogActions>

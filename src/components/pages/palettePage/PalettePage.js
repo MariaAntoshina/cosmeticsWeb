@@ -15,23 +15,30 @@ function PalettePage() {
             "21-50": false
         },
         brand : {
-
+            "Dior": false,
+            "Tom Ford" : false,
+            "Charlotte Tilbury": false,
+            "Yves Saint Laurent" : false,
         },
+        tags: {
+        "Favourite": false,
+        "Expensive": false,
+        }
 
     })
     const [dialogOpened, setDialogOpened] = useState(false)
     const [updateDialogOpened, setUpdateDialogOpened] = useState(false)
-    const [initialData, setInitialData] = useState({name: "", description: "", price: "", image: "", tags: ""});
+    const [initialData, setInitialData] = useState({name: "", brand: "", description: "", price: "", image: "", tags: ""});
 
     const handleCreate = () => {
         setDialogOpened(true)
     }
 
     const handleEdit = (object) => {
+        debugger
         setUpdateDialogOpened(true);
         setInitialData(object);
     }
-
 
 
     return (

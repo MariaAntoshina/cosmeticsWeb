@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {TextField, Button, DialogTitle, DialogContentText, Dialog, DialogContent, Autocomplete} from '@mui/material';
 import {useEditDataMutation} from "../../../api/paltteApi";
-import {TAG_LIST} from "../../../constants";
+import {BRAND_LIST, TAG_LIST} from "../../../constants";
 
 function EditEntityDialog({initialData, setUpdateDialogOpened, open}) {
     const [editData] = useEditDataMutation();
 
     const [newData, setNewData] = useState(
         {
+            brand: [],
             name: "",
             description: "",
             price: "",
@@ -33,7 +34,7 @@ function EditEntityDialog({initialData, setUpdateDialogOpened, open}) {
     };
 
     const handleInputChangeInAutocomplete = (fieldName, value) => {
-
+        debugger
         let updatedNewData = {...newData};
         updatedNewData[fieldName] = value;
         setNewData(updatedNewData);
@@ -41,10 +42,10 @@ function EditEntityDialog({initialData, setUpdateDialogOpened, open}) {
     }
 
     const handleEdit = () => {
+        debugger
         editData(newData);
         setUpdateDialogOpened(!open)
     }
-
 
 
     return (
@@ -54,6 +55,32 @@ function EditEntityDialog({initialData, setUpdateDialogOpened, open}) {
                 <DialogContentText>
                     Please fill out the details of the new entity.
                 </DialogContentText>
+                <Autocomplete
+                    id="brand-outlined"
+                    options={BRAND_LIST}
+                    getOptionLabel={(option) => {
+                            return option.title
+                        }
+                    }
+
+                    value={newData.brand ?
+                        BRAND_LIST
+                            .filter(brand => brand.title === newData.brand[0]?.title)[0] :
+                        {}}
+
+                    onChange={(e, value) =>
+                        handleInputChangeInAutocomplete("brand", [value])}
+                    filterSelectedOptions
+                    renderInput={(params) => (
+                        <TextField
+                            margin="dense"
+                            {...params}
+                            label="Brand"
+                        />
+                    )}
+
+
+                />
                 <TextField
                     label="Name"
                     margin="dense"
@@ -91,8 +118,13 @@ function EditEntityDialog({initialData, setUpdateDialogOpened, open}) {
                     multiple
                     id="tags-outlined"
                     options={TAG_LIST}
-                    getOptionLabel={(option) => option.title}
-                    value={newData.tags ? newData.tags : [] }
+                    getOptionLabel={(option) => {
+                        return option.title
+                    }
+                    }
+                    value={newData.tags ?
+                        TAG_LIST.filter(tag => newData.tags.map(ndt => ndt.title).includes(tag.title)) :
+                        []}
                     onChange={(e, value) =>
                         handleInputChangeInAutocomplete("tags", value)}
                     filterSelectedOptions
