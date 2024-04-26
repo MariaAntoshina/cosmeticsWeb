@@ -5,23 +5,30 @@ import {
     DialogActions,
     DialogContent,
     DialogContentText,
-    DialogTitle,
+    DialogTitle, MenuItem, Paper, Rating,
     TextField
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import {useCreateDataMutation} from "../../../api/paltteApi";
 import {BRAND_LIST, TAG_LIST} from "../../../constants";
+import * as PropTypes from "prop-types";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+
+
 
 function CreateEntityDialog({ open, setDialogOpened, onCreate }) {
 
     const [createData] = useCreateDataMutation();
 
-    const [brand, setBrand] = useState('');
+    const [brand, setBrand] = useState([]);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
+    const [rating, setRating] = useState(0)
     const [price, setPrice] = useState('');
     const [image, setImage] = useState('');
     const [tags, setTags] = useState([]);
+    const [fileName, setFileName] = useState('');
 
     const handleCancel = () => {
         setDialogOpened(!open);
@@ -34,6 +41,7 @@ function CreateEntityDialog({ open, setDialogOpened, onCreate }) {
             brand: brand,
             name: name,
             description: description,
+            rating: rating,
             price: price,
             image: image,
             tags: tags,
@@ -44,13 +52,26 @@ function CreateEntityDialog({ open, setDialogOpened, onCreate }) {
     };
 
     const clear = () => {
-        setBrand('');
+        setBrand([]);
         setName('');
         setDescription('');
+        setRating('');
         setPrice('');
         setImage('');
         setTags([]);
+        setFileName('');
     }
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        setFileName(file.name);
+        const reader = new FileReader();
+        reader.addEventListener("load", () => {
+            setImage(reader.result);
+        })
+        reader.readAsDataURL(file);
+    };
+
 
     return (
         <Dialog open={open}>
@@ -64,9 +85,12 @@ function CreateEntityDialog({ open, setDialogOpened, onCreate }) {
                     id="brand-outlined"
                     options={BRAND_LIST}
                     getOptionLabel={(option) => option.title}
-                    value={brand ? brand : [] }
-                    onChange={(e, value) =>
-                        setBrand(value)}
+                    value={brand ?
+                        BRAND_LIST
+                            .filter(brand => brand.title === brand[0]?.title)[0] :
+                        {}}
+                    onChange={(e,value) =>
+                        setBrand([value])}
                     filterSelectedOptions
                     renderInput={(params) => (
                         <TextField
@@ -93,6 +117,24 @@ function CreateEntityDialog({ open, setDialogOpened, onCreate }) {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                 />
+
+                    <TextField
+                        margin="dense"
+                        label="Rating"
+                        select
+                        fullWidth
+                        type="number"
+                        value={rating}
+                        onChange={(e) => setRating(e.target.value)}
+                        variant="outlined"
+                    >
+                        {[1, 2, 3, 4, 5].map((option) => (
+                            <MenuItem key={option} value={option}>
+                                {option}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+
                 <TextField
                     margin="dense"
                     label="Price"
@@ -101,14 +143,14 @@ function CreateEntityDialog({ open, setDialogOpened, onCreate }) {
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
                 />
-                <TextField
-                    margin="dense"
-                    label="Image URL"
-                    type="text"
-                    fullWidth
-                    value={image}
-                    onChange={(e) => setImage(e.target.value)}
-                />
+                {/*<TextField*/}
+                {/*    margin="dense"*/}
+                {/*    label="Image URL"*/}
+                {/*    type="text"*/}
+                {/*    fullWidth*/}
+                {/*    value={image}*/}
+                {/*    onChange={(e) => setImage(e.target.value)}*/}
+                {/*/>*/}
                 <Autocomplete
                     multiple
                     id="tags-outlined"
@@ -126,10 +168,34 @@ function CreateEntityDialog({ open, setDialogOpened, onCreate }) {
                         />
                     )}
                 />
+
+
+                <Box pt = {1.7}>
+                    <Button
+                        style={{marginRight: '16px'}}
+                        variant="contained"
+                        component="label"
+                    >
+                        Upload File
+                        <input
+                            onChange={handleFileChange}
+                            type="file"
+                            hidden
+                        />
+                    </Button>
+                    {fileName}
+                </Box>
+
+
+
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleCancel}>Cancel</Button>
-                <Button onClick={handleCreate} color="primary">Create</Button>
+
+                <Box pt = {0}>
+                    <Button onClick={handleCreate} color="primary">Create</Button>
+                    <Button onClick={handleCancel}>Cancel</Button>
+                </Box>
+
             </DialogActions>
         </Dialog>
     );

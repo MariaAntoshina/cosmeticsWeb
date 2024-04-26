@@ -35,7 +35,7 @@ function PalettePage() {
     }
 
     const handleEdit = (object) => {
-        debugger
+
         setUpdateDialogOpened(true);
         setInitialData(object);
     }

@@ -1,7 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {TextField, Button, DialogTitle, DialogContentText, Dialog, DialogContent, Autocomplete} from '@mui/material';
+import {
+    TextField,
+    Button,
+    DialogTitle,
+    DialogContentText,
+    Dialog,
+    DialogContent,
+    Autocomplete,
+    MenuItem
+} from '@mui/material';
 import {useEditDataMutation} from "../../../api/paltteApi";
 import {BRAND_LIST, TAG_LIST} from "../../../constants";
+import Box from "@mui/material/Box";
 
 function EditEntityDialog({initialData, setUpdateDialogOpened, open}) {
     const [editData] = useEditDataMutation();
@@ -11,16 +21,32 @@ function EditEntityDialog({initialData, setUpdateDialogOpened, open}) {
             brand: [],
             name: "",
             description: "",
+            rating: "",
             price: "",
             image: "",
             tags: []
         }
-    );// еще раз обсудить фигурные скобки
+    );
+    const [fileName, setFileName] = useState('');
 
-//здесь получается, что initialData меняется, мы записываем в setNewData новые измененные данные?
+
     useEffect(() => {
         setNewData(initialData ? initialData : {})
     }, [initialData]);
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        setFileName(file.name);
+        let updatedNewData = {...newData};
+
+        const reader = new FileReader();
+        reader.addEventListener("load", () => {
+            updatedNewData.image = reader.result;
+        })
+        reader.readAsDataURL(file);
+
+        setNewData(updatedNewData);
+    };
 
     const handleInputChange = (event) => {
 
@@ -34,7 +60,6 @@ function EditEntityDialog({initialData, setUpdateDialogOpened, open}) {
     };
 
     const handleInputChangeInAutocomplete = (fieldName, value) => {
-        debugger
         let updatedNewData = {...newData};
         updatedNewData[fieldName] = value;
         setNewData(updatedNewData);
@@ -42,18 +67,20 @@ function EditEntityDialog({initialData, setUpdateDialogOpened, open}) {
     }
 
     const handleEdit = () => {
-        debugger
+        setFileName('')
         editData(newData);
         setUpdateDialogOpened(!open)
     }
 
 
+
+
     return (
         <Dialog open={open}>
-            <DialogTitle>Create New Entity</DialogTitle>
+            <DialogTitle></DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    Please fill out the details of the new entity.
+                    Please fill out the details of the entity.
                 </DialogContentText>
                 <Autocomplete
                     id="brand-outlined"
@@ -98,6 +125,23 @@ function EditEntityDialog({initialData, setUpdateDialogOpened, open}) {
                     fullWidth
                 />
                 <TextField
+                    margin="dense"
+                    label="Rating"
+                    name = "rating"
+                    select
+                    fullWidth
+                    type="number"
+                    value={newData.rating}
+                    onChange={handleInputChange}
+                    variant="outlined"
+                >
+                    {[1, 2, 3, 4, 5].map((option) => (
+                        <MenuItem key={option} value={option}>
+                            {option}
+                        </MenuItem>
+                    ))}
+                </TextField>
+                <TextField
                     label="Price"
                     margin="dense"
                     name="price"
@@ -106,14 +150,7 @@ function EditEntityDialog({initialData, setUpdateDialogOpened, open}) {
                     onChange={handleInputChange}
                     fullWidth
                 />
-                <TextField
-                    label="Image URL"
-                    margin="dense"
-                    name="image"
-                    value={newData.image}
-                    onChange={handleInputChange}
-                    fullWidth
-                />
+
                 <Autocomplete
                     multiple
                     id="tags-outlined"
@@ -136,8 +173,27 @@ function EditEntityDialog({initialData, setUpdateDialogOpened, open}) {
                         />
                     )}
                 />
-                <Button onClick={handleEdit} variant="contained" color="primary">Edit</Button>
-                <Button onClick={() => setUpdateDialogOpened(!open)}>Cancel</Button>
+                <Button style={{marginRight: '16px'}}
+                    variant="contained"
+                    component="label"
+                >
+                    Upload File
+                    <input
+                        onChange={handleFileChange}
+                        type="file"
+                        hidden
+                    />
+                </Button>
+                {fileName}
+                <Box pt={1}>
+                    <Button onClick={handleEdit} variant="contained" color="primary">Edit</Button>
+                    <Button onClick={() => {
+                        setFileName("")
+                        setUpdateDialogOpened(!open)
+                    }}>Cancel</Button>
+                </Box>
+
+
             </DialogContent>
         </Dialog>
     );

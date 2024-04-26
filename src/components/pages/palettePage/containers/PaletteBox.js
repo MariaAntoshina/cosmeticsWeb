@@ -1,7 +1,7 @@
-import {Button, Card, CardActions, CardContent, CardMedia, Chip, Stack, Typography} from "@mui/material";
+import {Button, Card, CardActions, CardContent, CardMedia, Chip, Stack, Typography,Rating} from "@mui/material";
 import React from "react";
 
-export const PaletteBox = ({brand, name, image, description, price, id, tags, handleEdit, onDelete}) => {
+export const PaletteBox = ({brand, name, image, description, rating, price, id, tags, handleEdit, onDelete}) => {
 
     return <Card style={{ maxWidth: 300 }}>
         <CardMedia component="img" image={image} alt={name} />
@@ -15,6 +15,14 @@ export const PaletteBox = ({brand, name, image, description, price, id, tags, ha
             <Typography overflow={'scroll'} variant="body2" color="text.secondary" style={{ maxHeight: 100, minHeight: 100 }}>
                 {description}
             </Typography>
+            <Rating
+                margin="dense"
+                label="Rating"
+                type="number"
+                fullWidth
+                value={rating}
+                readOnly
+            />
             <Typography variant="h6" color="text.secondary">
                 Price: ${price}
             </Typography>
@@ -32,7 +40,7 @@ export const PaletteBox = ({brand, name, image, description, price, id, tags, ha
 
         </CardContent>
         <CardActions>
-            <Button size="small" onClick={() => handleEdit({id, name, image, description, price, brand, tags})}>
+            <Button size="small" onClick={() => handleEdit({id, name, image, description, price, brand, tags, rating})}>
                 Edit
             </Button>
             <Button size="small" onClick={() => onDelete(id)}>
