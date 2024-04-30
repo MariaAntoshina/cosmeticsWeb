@@ -6,10 +6,10 @@ export const PaletteBox = ({brand, name, image, description, rating, price, id, 
     return <Card style={{ maxWidth: 300 }}>
         <CardMedia component="img" image={image} alt={name} />
         <CardContent>
-            <Typography variant="h6" component="div">
+            <Typography variant="h8" fontWeight="bold" component="div">
                 {brand[0]?.title}
             </Typography>
-            <Typography variant="h6" component="div">
+            <Typography variant="h7" component="div">
                 {name}
             </Typography>
             <Typography overflow={'scroll'} variant="body2" color="text.secondary" style={{ maxHeight: 100, minHeight: 100 }}>

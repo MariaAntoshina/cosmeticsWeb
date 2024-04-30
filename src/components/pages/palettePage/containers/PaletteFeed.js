@@ -14,30 +14,43 @@ export const PaletteFeed = ({handleEdit, filterCriteria}) => {
     const filterDataByPrice = (criteria, data) => {
 
         if (!criteria.price['1-10']
-            && !criteria.price['11-20']
-            && !criteria.price['21-50']) {
+            && !criteria.price['11-30']
+            && !criteria.price['31-50']
+            && !criteria.price['51-100']
+        ) {
             return data;
         }
 
         return data.filter(d =>
             (criteria.price['1-10'] && (1 < d.price && d.price <= 10)) ||
-            (criteria.price['11-20'] && (10 < d.price && d.price <= 20)) ||
-            (criteria.price['21-50'] && (20 < d.price && d.price <= 50)))
+            (criteria.price['11-30'] && (10 < d.price && d.price <= 30)) ||
+            (criteria.price['31-50'] && (30 < d.price && d.price <= 50)) ||
+            (criteria.price['51-100'] && (50 < d.price && d.price <= 100)))
     }
 
     const filterDataByBrand = (criteria, data) => {
+
+
         if (!criteria.brand['Dior']
             && !criteria.brand['Tom Ford']
             && !criteria.brand['Charlotte Tilbury']
-            && !criteria.brand['Yves Saint Laurent']) {
+            && !criteria.brand['Yves Saint Laurent']
+            && !criteria.brand['Sephora Collection']
+            && !criteria.brand['Huda Beauty']
+            && !criteria.brand['Glossier']
+            && !criteria.brand['Prada Beauty']
+        ) {
             return data;
         }
         return data.filter(d =>
             (criteria.brand['Dior'] && (d.brand.map(brand => brand.title).includes("Dior"))) ||
             (criteria.brand['Tom Ford'] && (d.brand.map(brand => brand.title).includes("Tom Ford"))) ||
             (criteria.brand['Charlotte Tilbury'] && (d.brand.map(brand => brand.title).includes("Charlotte Tilbury"))) ||
-            (criteria.brand['Yves Saint Laurent'] && (d.brand.map(brand => brand.title).includes("Yves Saint Laurent")))
-
+            (criteria.brand['Yves Saint Laurent'] && (d.brand.map(brand => brand.title).includes("Yves Saint Laurent"))) ||
+            (criteria.brand['Sephora Collection'] && (d.brand.map(brand => brand.title).includes("Sephora Collection"))) ||
+            (criteria.brand['Huda Beauty'] && (d.brand.map(brand => brand.title).includes("Huda Beauty"))) ||
+            (criteria.brand['Glossier'] && (d.brand.map(brand => brand.title).includes("Glossier"))) ||
+            (criteria.brand['Prada Beauty'] && (d.brand.map(brand => brand.title).includes("Prada Beauty")))
         );
     }
 
@@ -51,6 +64,26 @@ export const PaletteFeed = ({handleEdit, filterCriteria}) => {
         return data.filter(d =>
             (criteria.tags['Favourite'] && (d.tags.map(tag => tag.title).includes("Favourite"))) ||
             (criteria.tags['Expensive'] && (d.tags.map(tag => tag.title).includes("Expensive"))));
+    }
+
+    const filterDataByRating = (criteria, data) => {
+        if (!criteria.rating['5']
+            && !criteria.rating['4']
+            && !criteria.rating['3']
+            && !criteria.rating['2']
+            && !criteria.rating['1']
+        ) {
+            return data;
+        }
+
+        return data.filter(d =>
+            (criteria.rating['5'] && (d.rating == "5")) ||
+            (criteria.rating['4'] && (d.rating == "4")) ||
+            (criteria.rating['3'] && (d.rating == "3")) ||
+            (criteria.rating['2'] && (d.rating == "2")) ||
+            (criteria.rating['1'] && (d.rating == "1"))
+
+        );
     }
 
 
@@ -88,7 +121,7 @@ export const PaletteFeed = ({handleEdit, filterCriteria}) => {
     if(isSuccess === false){
         palettesData = []
     } else {
-        palettesData = breakDataIntoPortions(filterDataByTags(filterCriteria, filterDataByBrand(filterCriteria, filterDataByPrice(filterCriteria, data))));
+        palettesData = breakDataIntoPortions(filterDataByRating(filterCriteria, filterDataByTags(filterCriteria, filterDataByBrand(filterCriteria, filterDataByPrice(filterCriteria, data)))));
     }
 
     return <Box maxHeight={'80vh'} overflow={'scroll'}>

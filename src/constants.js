@@ -15,5 +15,8 @@ export const BRAND_LIST = [
     {title: 'Dior'},
     {title: 'Tom Ford'},
     {title: 'Charlotte Tilbury'},
-    {title: 'Yves Saint Laurent'}
+    {title: 'Sephora Collection'},
+    {title: 'Huda Beauty'},
+    {title: 'Glossier'},
+    {title: 'Prada Beauty'}
 ]

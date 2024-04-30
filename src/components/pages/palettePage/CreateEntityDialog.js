@@ -143,14 +143,7 @@ function CreateEntityDialog({ open, setDialogOpened, onCreate }) {
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
                 />
-                {/*<TextField*/}
-                {/*    margin="dense"*/}
-                {/*    label="Image URL"*/}
-                {/*    type="text"*/}
-                {/*    fullWidth*/}
-                {/*    value={image}*/}
-                {/*    onChange={(e) => setImage(e.target.value)}*/}
-                {/*/>*/}
+
                 <Autocomplete
                     multiple
                     id="tags-outlined"

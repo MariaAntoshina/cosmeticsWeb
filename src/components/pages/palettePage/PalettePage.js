@@ -11,24 +11,36 @@ function PalettePage() {
     const [filterCriteria, setFilterCriteria] = useState({
         price: {
             "1-10": false,
-            "11-20": false,
-            "21-50": false
+            "11-30": false,
+            "31-50": false,
+            "51-100" : false
+
         },
         brand : {
             "Dior": false,
             "Tom Ford" : false,
             "Charlotte Tilbury": false,
             "Yves Saint Laurent" : false,
+            "Sephora Collection" : false,
+            'Huda Beauty' : false,
+            'Glossier': false,
+            'Prada Beauty': false
         },
         tags: {
         "Favourite": false,
         "Expensive": false,
+        },
+        rating: {
+            "5": false,
+            "4": false,
+            "3": false,
+            "2": false,
+            "1": false
         }
-
     })
     const [dialogOpened, setDialogOpened] = useState(false)
     const [updateDialogOpened, setUpdateDialogOpened] = useState(false)
-    const [initialData, setInitialData] = useState({name: "", brand: "", description: "", price: "", image: "", tags: ""});
+    const [initialData, setInitialData] = useState({name: "", rating: "", brand: "", description: "", price: "", image: "", tags: ""});
 
     const handleCreate = () => {
         setDialogOpened(true)
