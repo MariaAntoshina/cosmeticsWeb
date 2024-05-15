@@ -15,7 +15,7 @@ export const PaletteBox = ({brand, name, image, description, rating, price, id, 
         />
         <CardContent >
             <Typography variant="h8" fontWeight="bold" component="div">
-                {brand[0]?.title}
+                {brand?.title}
             </Typography>
             <Typography variant="h7" component="div">
                 {name}

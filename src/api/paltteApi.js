@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-const API_ENDPOINT = 'http://localhost:3001';
+const API_ENDPOINT = 'http://35.156.40.32:8080';
+// const API_ENDPOINT = 'http://localhost:8080';
 export const dataApi = createApi({
 
     baseQuery: fetchBaseQuery({ baseUrl: API_ENDPOINT }),
