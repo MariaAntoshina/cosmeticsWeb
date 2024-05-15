@@ -13,7 +13,7 @@ jobs:
       - name: Build Docker Image
         working-directory: .
         run: |
-          docker build -t make-up-front-end -f ReactDockerfile .
+          docker build -t make-up-front-end .
           docker images
 
       - name: Tag Docker Image
