@@ -7,7 +7,9 @@ export const dataApi = createApi({
     endpoints: (builder) => ({
         // Define a method to fetch data using GET
         getPalettes: builder.query({
-            query: () => '/palettes',
+            query: (page) => {
+                return `/palettes?_page=${page}&_limit=6`
+            },
             providesTags: ['palettes']
         }),
 

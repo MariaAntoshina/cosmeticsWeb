@@ -1,15 +1,39 @@
 import ThreePalettesContainer from "./ThreePalettesContainer";
 import Box from "@mui/material/Box";
-import {useDeleteDataMutation, useGetPalettesQuery} from "../../../../api/paltteApi";
+import { useGetPalettesQuery} from "../../../../api/paltteApi";
+import React, {useEffect, useState, useRef, Fragment} from "react";
+import Button from "@mui/material/Button";
 
 
 
+export const PaletteFeed = ({handleEdit, filterCriteria, popupDeleteDialog, onDelete}) => {
 
-export const PaletteFeed = ({handleEdit, filterCriteria}) => {
+    const [page, setPage] = useState(1);
+    const [newData, setNewData] = useState([]);
+    const [firstData, setFirstData] = useState([]);
+
+    const [totalData, setTotalData] = useState([]);
+
+    const { data, isSuccess } = useGetPalettesQuery(page);
+    const incrementPage = () => {
+
+        setPage(page+1) //=== useGetPalettesQuery(page);
+
+    };
+
+    useEffect(() => {
 
 
-    const { data, isSuccess } = useGetPalettesQuery();
-    const [deleteData] = useDeleteDataMutation();
+        if (isSuccess) {
+            let newTotalData = [...totalData];
+            newTotalData.push(...data)
+            setTotalData(newTotalData);
+        }
+
+
+    }, [data]);
+
+
 
     const filterDataByPrice = (criteria, data) => {
 
@@ -111,9 +135,7 @@ export const PaletteFeed = ({handleEdit, filterCriteria}) => {
         return result;
     }
 
-    const onDelete = (id) => {
-        deleteData(id);
-    }
+
 
 
     let palettesData;
@@ -121,18 +143,23 @@ export const PaletteFeed = ({handleEdit, filterCriteria}) => {
     if(isSuccess === false){
         palettesData = []
     } else {
-        palettesData = breakDataIntoPortions(filterDataByRating(filterCriteria, filterDataByTags(filterCriteria, filterDataByBrand(filterCriteria, filterDataByPrice(filterCriteria, data)))));
+        palettesData = breakDataIntoPortions(filterDataByRating(filterCriteria, filterDataByTags(filterCriteria, filterDataByBrand(filterCriteria, filterDataByPrice(filterCriteria, totalData)))));
     }
 
     return <Box maxHeight={'80vh'} overflow={'scroll'}>
         {
             palettesData.map((i,k) => {
                 return <ThreePalettesContainer
-                    threePalettesArray={i}
-                    onDelete={onDelete}
-                    handleEdit = {handleEdit}
-                    key = {k}/>
+                        threePalettesArray={i}
+                        popupDeleteDialog={popupDeleteDialog}
+                        onDelete = {onDelete}
+                        handleEdit = {handleEdit}
+                        key = {k}/>
             })
         }
+        <Button onClick={incrementPage}>
+            Loading...
+        </Button>
+        {/*<div ref={palettesData.length > 0 ? loader : null}></div>*/}
     </Box>
 }

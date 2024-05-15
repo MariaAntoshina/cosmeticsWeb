@@ -192,8 +192,6 @@ function EditEntityDialog({initialData, setUpdateDialogOpened, open}) {
                         setUpdateDialogOpened(!open)
                     }}>Cancel</Button>
                 </Box>
-
-
             </DialogContent>
         </Dialog>
     );

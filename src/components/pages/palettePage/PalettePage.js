@@ -2,10 +2,11 @@ import React, {useState} from 'react';
 import {Grid} from '@mui/material';
 import {Filter} from "./containers/Filter";
 import {PaletteFeed} from "./containers/PaletteFeed";
+import ConfirmationPopupDialog from "./ConfirmationPopupDialog";
 import Button from "@mui/material/Button";
 import CreateEntityDialog from "./CreateEntityDialog";
 import EditEntityDialog from "./EditEntityDialog";
-
+import {useDeleteDataMutation} from "../../../api/paltteApi";
 function PalettePage() {
 
     const [filterCriteria, setFilterCriteria] = useState({
@@ -38,9 +39,12 @@ function PalettePage() {
             "1": false
         }
     })
+    const [deleteData] = useDeleteDataMutation();
     const [dialogOpened, setDialogOpened] = useState(false)
     const [updateDialogOpened, setUpdateDialogOpened] = useState(false)
+    const [popupDialogOpened, setPopupDialogOpened] = useState(false)
     const [initialData, setInitialData] = useState({name: "", rating: "", brand: "", description: "", price: "", image: "", tags: ""});
+    const [idToBeDeleted, setIdToBeDeleted] = useState(null);
 
     const handleCreate = () => {
         setDialogOpened(true)
@@ -51,7 +55,13 @@ function PalettePage() {
         setUpdateDialogOpened(true);
         setInitialData(object);
     }
-
+    const onDelete = (id) => {
+        deleteData(id);
+    }
+    const handlePopupConfirmationDialog = (id) => {
+        setIdToBeDeleted(id)
+        setPopupDialogOpened(!popupDialogOpened)
+    }
 
     return (
         <Grid container spacing={2} paddingTop={10}>
@@ -63,11 +73,21 @@ function PalettePage() {
             </Grid>
             <Grid item xs={9}>
                 <Button onClick={handleCreate}>create</Button>
-                <PaletteFeed handleEdit={handleEdit} filterCriteria={filterCriteria}/>
+                <PaletteFeed handleEdit={handleEdit}
+                             filterCriteria={filterCriteria}
+                             popupDeleteDialog = {handlePopupConfirmationDialog}
+                             onDelete={onDelete}
+                />
                 <CreateEntityDialog
                     open={dialogOpened}
                     setDialogOpened={setDialogOpened}
                 />
+              <ConfirmationPopupDialog
+                  open={popupDialogOpened}
+                  handlePopupConfirmationDialog = {handlePopupConfirmationDialog}
+                  onDelete={onDelete}
+                  id={idToBeDeleted}
+                  />
                 <EditEntityDialog
                     open={updateDialogOpened}
                     setUpdateDialogOpened={setUpdateDialogOpened}
