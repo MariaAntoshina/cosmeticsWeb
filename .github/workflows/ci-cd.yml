@@ -39,8 +39,15 @@ jobs:
           host: ${{secrets.EC2_HOST}}
           username: ${{secrets.EC2_USER}}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            sudo docker pull iceteagreen/make-up-frontend-repository:latest &&
-            sudo docker stop make-up-front-end &&
-            sudo docker rm make-up-front-end &&            
-            sudo docker run -d --name make-up-front-end -p 3000:3000 iceteagreen/make-up-frontend-repository:latest
+#          script: |
+#            sudo docker pull iceteagreen/make-up-frontend-repository:latest &&
+#            sudo docker stop make-up-front-end &&
+#            sudo docker rm make-up-front-end &&
+#            sudo docker run -d --name make-up-front-end -p 3000:3000 iceteagreen/make-up-frontend-repository:latest
+        script: |
+          if sudo docker ps -a --format '{{.Names}}' | grep -Eq "^make-up-front-end\$"; then
+            sudo docker stop make-up-front-end
+            sudo docker rm make-up-front-end
+          fi
+          sudo docker pull iceteagreen/make-up-frontend-repository:latest
+          sudo docker run -d --name make-up-front-end -p 3000:3000 iceteagreen/make-up-frontend-repository:latest 
