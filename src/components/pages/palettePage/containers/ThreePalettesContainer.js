@@ -10,7 +10,7 @@ const ThreePalettesContainer = ({threePalettesArray, onDelete, handleEdit}) => {
             {threePalettesArray.map(i => {
                 return <Grid item xs={4} key={i.id}>
                     <PaletteBox
-                        brand = { i.brand ? i.brand : [] }
+                        brand = { i.brandDto }
                         name={i.name}
                         description={i.description}
                         image={i.image}

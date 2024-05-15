@@ -1,0 +1,42 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Build Docker Image
+        run: |
+          docker build -t make-up-front-end -f ReactDockerfile .
+          docker images
+
+      - name: Tag Docker Image
+        run: |
+          docker tag make-up-front-end iceteagreen/make-up-frontend-repository:latest
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Push Docker Image
+        run: |
+          docker push iceteagreen/make-up-frontend-repository:latest
+
+      - name: SSH to EC2 instance and update Docker container
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{secrets.EC2_HOST}}
+          username: ${{secrets.EC2_USER}}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            sudo docker pull iceteagreen/make-up-frontend-repository:latest &&
+            sudo docker stop make-up-front-end &&
+            sudo docker rm make-up-front-end &&
+            sudo docker run -d --name make-up-front-end -p 3000:3000 my-react-app iceteagreen/make-up-repository:latest

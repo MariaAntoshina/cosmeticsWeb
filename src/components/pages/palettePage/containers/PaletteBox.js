@@ -7,7 +7,7 @@ export const PaletteBox = ({brand, name, image, description, rating, price, id, 
         <CardMedia component="img" image={image} alt={name} />
         <CardContent>
             <Typography variant="h8" fontWeight="bold" component="div">
-                {brand[0]?.title}
+                {brand?.title}
             </Typography>
             <Typography variant="h7" component="div">
                 {name}
