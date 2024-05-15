@@ -50,4 +50,4 @@ jobs:
               sudo docker rm make-up-front-end
             fi
             sudo docker pull iceteagreen/make-up-frontend-repository:latest
-            sudo docker run -d --name make-up-front-end -p 3000:3000 iceteagreen/make-up-frontend-repository:latest 
+            sudo docker run -d --name make-up-front-end -p 80:3000 iceteagreen/make-up-frontend-repository:latest 
