@@ -21,18 +21,6 @@ export const PaletteFeed = ({handleEdit, filterCriteria, popupDeleteDialog, onDe
 
     };
 
-    useEffect(() => {
-
-
-        if (isSuccess) {
-            let newTotalData = [...totalData];
-            newTotalData.push(...data)
-            setTotalData(newTotalData);
-        }
-
-
-    }, [data]);
-
 
 
     const filterDataByPrice = (criteria, data) => {
@@ -143,7 +131,7 @@ export const PaletteFeed = ({handleEdit, filterCriteria, popupDeleteDialog, onDe
     if(isSuccess === false){
         palettesData = []
     } else {
-        palettesData = breakDataIntoPortions(filterDataByRating(filterCriteria, filterDataByTags(filterCriteria, filterDataByBrand(filterCriteria, filterDataByPrice(filterCriteria, totalData)))));
+        palettesData = breakDataIntoPortions(filterDataByRating(filterCriteria, filterDataByTags(filterCriteria, filterDataByBrand(filterCriteria, filterDataByPrice(filterCriteria, data)))));
     }
 
     return <Box maxHeight={'80vh'} overflow={'scroll'}>
