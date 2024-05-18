@@ -2,10 +2,8 @@ import Box from "@mui/material/Box";
 import React from 'react';
 import {Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Radio, RadioGroup, Rating} from '@mui/material';
 import Typography from "@mui/material/Typography";
-import {BRAND_LIST} from "../../../../constants";
 
-
-export const Filter = ({filterCriteria, setFilterCriteria}) => {
+export const Filter = ({filterCriteria, setFilterCriteria, allTags, allBrands}) => {
 
 
     const handleCheckboxChange = (outerField, e) => {
@@ -99,7 +97,7 @@ export const Filter = ({filterCriteria, setFilterCriteria}) => {
         <FormGroup>
             <Typography>Brand</Typography>
 
-            {BRAND_LIST.map(brand => getFilterItem(brand.title))}
+            {allBrands.map(brand => getFilterItem(brand.title))}
 
         </FormGroup>
 

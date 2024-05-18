@@ -5,6 +5,7 @@ export const ENDPOINTS = {
     FOUNDATIONS: '/foundations'
 };
 
+export const API_ENDPOINT = 'http://35.156.40.32:8080';
 
 export const TAG_LIST = [
     {title: 'Favourite'},

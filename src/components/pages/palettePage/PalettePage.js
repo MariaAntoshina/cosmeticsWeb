@@ -7,6 +7,8 @@ import Button from "@mui/material/Button";
 import CreateEntityDialog from "./CreateEntityDialog";
 import EditEntityDialog from "./EditEntityDialog";
 import {useDeleteDataMutation} from "../../../api/paltteApi";
+import {useGetTagsQuery} from "../../../api/tagsApi";
+import {useGetBrandsQuery} from "../../../api/brandApi";
 function PalettePage() {
 
     const [filterCriteria, setFilterCriteria] = useState({
@@ -40,6 +42,8 @@ function PalettePage() {
         }
     })
     const [deleteData] = useDeleteDataMutation();
+    const { data:allTags, isSuccess } = useGetTagsQuery();
+    const { data:allBrands, isSuccess: brandsSuccess } = useGetBrandsQuery();
     const [dialogOpened, setDialogOpened] = useState(false)
     const [updateDialogOpened, setUpdateDialogOpened] = useState(false)
     const [popupDialogOpened, setPopupDialogOpened] = useState(false)
@@ -66,21 +70,27 @@ function PalettePage() {
     return (
         <Grid container spacing={2} paddingTop={10}>
             <Grid item xs={3}>
-                <Filter
+                {allBrands && allTags && <Filter
                     filterCriteria={filterCriteria}
                     setFilterCriteria={setFilterCriteria}
-                />
+                    allTags={allTags}
+                    allBrands={allBrands}
+                />}
             </Grid>
             <Grid item xs={9}>
                 <Button onClick={handleCreate}>create</Button>
-                <PaletteFeed handleEdit={handleEdit}
-                             filterCriteria={filterCriteria}
-                             popupDeleteDialog = {handlePopupConfirmationDialog}
-                             onDelete={onDelete}
-                />
+                {allBrands && allTags && <PaletteFeed handleEdit={handleEdit}
+                              filterCriteria={filterCriteria}
+                              popupDeleteDialog={handlePopupConfirmationDialog}
+                              onDelete={onDelete}
+                              allTags={allTags}
+                              allBrands={allBrands}
+                />}
                 <CreateEntityDialog
                     open={dialogOpened}
                     setDialogOpened={setDialogOpened}
+                    allTags={allTags}
+                    allBrands={allBrands}
                 />
               <ConfirmationPopupDialog
                   open={popupDialogOpened}
@@ -92,6 +102,8 @@ function PalettePage() {
                     open={updateDialogOpened}
                     setUpdateDialogOpened={setUpdateDialogOpened}
                     initialData={initialData}
+                    allTags={allTags}
+                    allBrands={allBrands}
                 />
             </Grid>
         </Grid>

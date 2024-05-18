@@ -13,7 +13,7 @@ import {useEditDataMutation} from "../../../api/paltteApi";
 import {BRAND_LIST, TAG_LIST} from "../../../constants";
 import Box from "@mui/material/Box";
 
-function EditEntityDialog({initialData, setUpdateDialogOpened, open}) {
+function EditEntityDialog({initialData, setUpdateDialogOpened, open, allTags, allBrands}) {
     const [editData] = useEditDataMutation();
 
     const [newData, setNewData] = useState(

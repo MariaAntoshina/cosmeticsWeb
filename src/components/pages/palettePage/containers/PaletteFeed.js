@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 
 
 
-export const PaletteFeed = ({handleEdit, filterCriteria, popupDeleteDialog, onDelete}) => {
+export const PaletteFeed = ({handleEdit, filterCriteria, popupDeleteDialog, onDelete, allTags, allBrands}) => {
 
     const [page, setPage] = useState(1);
     const [newData, setNewData] = useState([]);
@@ -42,40 +42,32 @@ export const PaletteFeed = ({handleEdit, filterCriteria, popupDeleteDialog, onDe
 
     const filterDataByBrand = (criteria, data) => {
 
-
-        if (!criteria.brand['Dior']
-            && !criteria.brand['Tom Ford']
-            && !criteria.brand['Charlotte Tilbury']
-            && !criteria.brand['Yves Saint Laurent']
-            && !criteria.brand['Sephora Collection']
-            && !criteria.brand['Huda Beauty']
-            && !criteria.brand['Glossier']
-            && !criteria.brand['Prada Beauty']
-        ) {
+        if (allBrands.map(ab => ab.title).every(brand => !criteria.brand[brand])) {
             return data;
         }
+
+        // Filter the data based on the selected brands in the criteria
         return data.filter(d =>
-            (criteria.brand['Dior'] && (d.brand.map(brand => brand.title).includes("Dior"))) ||
-            (criteria.brand['Tom Ford'] && (d.brand.map(brand => brand.title).includes("Tom Ford"))) ||
-            (criteria.brand['Charlotte Tilbury'] && (d.brand.map(brand => brand.title).includes("Charlotte Tilbury"))) ||
-            (criteria.brand['Yves Saint Laurent'] && (d.brand.map(brand => brand.title).includes("Yves Saint Laurent"))) ||
-            (criteria.brand['Sephora Collection'] && (d.brand.map(brand => brand.title).includes("Sephora Collection"))) ||
-            (criteria.brand['Huda Beauty'] && (d.brand.map(brand => brand.title).includes("Huda Beauty"))) ||
-            (criteria.brand['Glossier'] && (d.brand.map(brand => brand.title).includes("Glossier"))) ||
-            (criteria.brand['Prada Beauty'] && (d.brand.map(brand => brand.title).includes("Prada Beauty")))
+            allBrands.map(ab => ab.title).some(brand => criteria.brand[brand] && d.brand.title.includes(brand))
         );
     }
 
 
     const filterDataByTags = (criteria, data) => {
-        if (!criteria.tags['Favourite']
-            && !criteria.tags['Expensive']) {
+
+        const tags = allTags.map(t=> t.title);
+
+        // Check if none of the specified tags are in the criteria
+        const noSelectedTags = tags.every(tag => !criteria.tags[tag]);
+
+        if (noSelectedTags) {
             return data;
         }
 
+        // Filter the data based on the selected tags in the criteria
         return data.filter(d =>
-            (criteria.tags['Favourite'] && (d.tags.map(tag => tag.title).includes("Favourite"))) ||
-            (criteria.tags['Expensive'] && (d.tags.map(tag => tag.title).includes("Expensive"))));
+            tags.some(tag => criteria.tags[tag] && d.tags.map(t => t.title).includes(tag))
+        );
     }
 
     const filterDataByRating = (criteria, data) => {

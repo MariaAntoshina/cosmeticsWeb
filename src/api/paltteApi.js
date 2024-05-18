@@ -1,9 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import {API_ENDPOINT} from "../constants";
 
 // const API_ENDPOINT = 'http://35.156.40.32:8080';
-const API_ENDPOINT = 'http://localhost:8080';
+// export const API_ENDPOINT = 'http://localhost:8080';
 export const dataApi = createApi({
-
+    reducerPath:"palettes",
     baseQuery: fetchBaseQuery({ baseUrl: API_ENDPOINT }),
     endpoints: (builder) => ({
         // Define a method to fetch data using GET

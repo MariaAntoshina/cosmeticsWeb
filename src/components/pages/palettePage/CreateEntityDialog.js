@@ -9,17 +9,19 @@ import {
     TextField
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import {useCreateDataMutation} from "../../../api/paltteApi";
-import {BRAND_LIST, TAG_LIST} from "../../../constants";
+import {useCreateDataMutation, useGetPalettesQuery} from "../../../api/paltteApi";
 import * as PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import {useGetTagsQuery} from "../../../api/tagsApi";
+import {useGetBrandsQuery} from "../../../api/brandApi";
 
 
 
-function CreateEntityDialog({ open, setDialogOpened, onCreate }) {
+function CreateEntityDialog({ open, setDialogOpened, onCreate, allTags, allBrands }) {
 
     const [createData] = useCreateDataMutation();
+
 
     const [brand, setBrand] = useState([]);
     const [name, setName] = useState('');
@@ -37,8 +39,8 @@ function CreateEntityDialog({ open, setDialogOpened, onCreate }) {
     const handleCreate = () => {
         const newEntity = {
             //Todo add id
-            // id: uuid()
-            brand: brand,
+            id: null,
+            brand: brand[0],
             name: name,
             description: description,
             rating: rating,
@@ -81,15 +83,15 @@ function CreateEntityDialog({ open, setDialogOpened, onCreate }) {
                     Please fill out the details of the new entity.
                 </DialogContentText>
 
-                <Autocomplete
+                {allBrands && <Autocomplete
                     id="brand-outlined"
-                    options={BRAND_LIST}
+                    options={allBrands}
                     getOptionLabel={(option) => option.title}
                     value={brand ?
-                        BRAND_LIST
+                        allBrands
                             .filter(brand => brand.title === brand[0]?.title)[0] :
                         {}}
-                    onChange={(e,value) =>
+                    onChange={(e, value) =>
                         setBrand([value])}
                     filterSelectedOptions
                     renderInput={(params) => (
@@ -99,7 +101,7 @@ function CreateEntityDialog({ open, setDialogOpened, onCreate }) {
                             label="Brand"
                         />
                     )}
-                />
+                />}
                 <TextField
                     autoFocus
                     margin="dense"
@@ -147,7 +149,7 @@ function CreateEntityDialog({ open, setDialogOpened, onCreate }) {
                 <Autocomplete
                     multiple
                     id="tags-outlined"
-                    options={TAG_LIST}
+                    options={allTags}
                     getOptionLabel={(option) => option.title}
                     value={tags ? tags : [] }
                     onChange={(e, value) =>
