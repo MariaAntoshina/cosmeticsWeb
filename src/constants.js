@@ -5,8 +5,8 @@ export const ENDPOINTS = {
     FOUNDATIONS: '/foundations'
 };
 
-// export const API_ENDPOINT = 'http://35.156.40.32:8080';
-export const API_ENDPOINT = 'http://localhost:8080';
+export const API_ENDPOINT = 'http://35.156.40.32:8080';
+// export const API_ENDPOINT = 'http://localhost:8080';
 
 export const BRAND_LIST = [
     {title: 'Dior'},
