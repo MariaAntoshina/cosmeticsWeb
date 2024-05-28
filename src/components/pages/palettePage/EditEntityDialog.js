@@ -59,12 +59,23 @@ function EditEntityDialog({initialData, setUpdateDialogOpened, open, allTags, al
         setNewData(updatedNewData);
     };
 
-    const handleInputChangeInAutocomplete = (fieldName, value) => {
+    const handleInputChangeTags = (fieldName, value) => {
+        // debugger
+        let updatedNewData = {...newData};
+        updatedNewData[fieldName] = value;
+        setNewData(updatedNewData);
+
+    }
+
+    const handleInputChangeBrand = (fieldName, value) => {
+        // debugger
         let updatedNewData = {...newData};
         updatedNewData[fieldName] = value ? value[0] : {};
         setNewData(updatedNewData);
 
     }
+
+
 
     const handleEdit = () => {
         setFileName('')
@@ -72,7 +83,10 @@ function EditEntityDialog({initialData, setUpdateDialogOpened, open, allTags, al
         setUpdateDialogOpened(!open)
     }
 
-
+ function test (newDataTags, allTags) {
+        debugger
+     return true
+ }
 
 
     return (
@@ -98,7 +112,7 @@ function EditEntityDialog({initialData, setUpdateDialogOpened, open, allTags, al
                         {}}
 
                     onChange={(e, value) =>
-                        handleInputChangeInAutocomplete("brand", [value])}
+                        handleInputChangeBrand("brand", [value])}
                     filterSelectedOptions
                     renderInput={(params) => (
                         <TextField
@@ -153,7 +167,7 @@ function EditEntityDialog({initialData, setUpdateDialogOpened, open, allTags, al
                     fullWidth
                 />
 
-                {allTags && <Autocomplete
+                {allTags && newData.tags && <Autocomplete
                     multiple
                     id="tags-outlined"
                     options={allTags}
@@ -165,7 +179,7 @@ function EditEntityDialog({initialData, setUpdateDialogOpened, open, allTags, al
                         allTags.filter(tag => newData.tags.map(ndt => ndt.title).includes(tag.title)) :
                         []}
                     onChange={(e, value) =>
-                        handleInputChangeInAutocomplete("tags", value)}
+                        handleInputChangeTags("tags", value)}
                     filterSelectedOptions
                     renderInput={(params) => (
                         <TextField
