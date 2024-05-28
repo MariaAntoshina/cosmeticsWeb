@@ -7,11 +7,6 @@ export const ENDPOINTS = {
 
 export const API_ENDPOINT = 'http://35.156.40.32:8080';
 
-export const TAG_LIST = [
-    {title: 'Favourite'},
-    {title: 'Expensive'}
-]
-
 export const BRAND_LIST = [
     {title: 'Dior'},
     {title: 'Tom Ford'},

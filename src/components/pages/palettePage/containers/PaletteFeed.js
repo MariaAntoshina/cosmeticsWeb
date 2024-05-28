@@ -2,24 +2,15 @@ import ThreePalettesContainer from "./ThreePalettesContainer";
 import Box from "@mui/material/Box";
 import { useGetPalettesQuery} from "../../../../api/paltteApi";
 import React, {useEffect, useState, useRef, Fragment} from "react";
-import Button from "@mui/material/Button";
+
 
 
 
 export const PaletteFeed = ({handleEdit, filterCriteria, popupDeleteDialog, onDelete, allTags, allBrands}) => {
 
     const [page, setPage] = useState(1);
-    const [newData, setNewData] = useState([]);
-    const [firstData, setFirstData] = useState([]);
-
-    const [totalData, setTotalData] = useState([]);
-
     const { data, isSuccess } = useGetPalettesQuery(page);
-    const incrementPage = () => {
 
-        setPage(page+1) //=== useGetPalettesQuery(page);
-
-    };
 
 
 
@@ -137,9 +128,6 @@ export const PaletteFeed = ({handleEdit, filterCriteria, popupDeleteDialog, onDe
                         key = {k}/>
             })
         }
-        <Button onClick={incrementPage}>
-            Loading...
-        </Button>
         {/*<div ref={palettesData.length > 0 ? loader : null}></div>*/}
     </Box>
 }

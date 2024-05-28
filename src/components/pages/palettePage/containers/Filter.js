@@ -77,22 +77,17 @@ export const Filter = ({filterCriteria, setFilterCriteria, allTags, allBrands}) 
         <FormGroup>
             <Typography>Tags</Typography>
 
-            <FormControlLabel
-                control={<Checkbox
-                    checked={filterCriteria['Favourite']}
-                />}
-                onChange={(e) => handleCheckboxChange('tags', e)}
-                name={'Favourite'}
-                label="Favourite"
-            />
-            <FormControlLabel
-                control={<Checkbox
+            {allTags.map(i => {
+                return <FormControlLabel
+                    control={<Checkbox
+                        checked={filterCriteria[i.title]}
+                    />}
                     onChange={(e) => handleCheckboxChange('tags', e)}
-                />}
-                onChange={handleCheckboxChange}
-                name={'Expensive'}
-                label="Expensive"
-            />
+                    name={i.title}
+                    label={i.title}
+                />
+            })}
+
         </FormGroup>
         <FormGroup>
             <Typography>Brand</Typography>

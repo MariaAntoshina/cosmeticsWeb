@@ -10,7 +10,7 @@ import {
     MenuItem
 } from '@mui/material';
 import {useEditDataMutation} from "../../../api/paltteApi";
-import {BRAND_LIST, TAG_LIST} from "../../../constants";
+import {BRAND_LIST} from "../../../constants";
 import Box from "@mui/material/Box";
 
 function EditEntityDialog({initialData, setUpdateDialogOpened, open, allTags, allBrands}) {
@@ -82,17 +82,19 @@ function EditEntityDialog({initialData, setUpdateDialogOpened, open, allTags, al
                 <DialogContentText>
                     Please fill out the details of the entity.
                 </DialogContentText>
-                <Autocomplete
+                {allBrands && <Autocomplete
                     id="brand-outlined"
-                    options={BRAND_LIST}
+                    options={allBrands}
                     getOptionLabel={(option) => {
-                            return option.title
-                        }
+                        return option.title
+                    }
                     }
 
                     value={newData.brand ?
-                        BRAND_LIST
-                            .filter(brand => brand.title === newData.brand[0]?.title)[0] :
+                        allBrands
+                            .filter(brand => {
+                                return brand.title === newData.brand?.title
+                            })[0] :
                         {}}
 
                     onChange={(e, value) =>
@@ -107,7 +109,7 @@ function EditEntityDialog({initialData, setUpdateDialogOpened, open, allTags, al
                     )}
 
 
-                />
+                />}
                 <TextField
                     label="Name"
                     margin="dense"
@@ -151,16 +153,16 @@ function EditEntityDialog({initialData, setUpdateDialogOpened, open, allTags, al
                     fullWidth
                 />
 
-                <Autocomplete
+                {allTags && <Autocomplete
                     multiple
                     id="tags-outlined"
-                    options={TAG_LIST}
+                    options={allTags}
                     getOptionLabel={(option) => {
                         return option.title
                     }
                     }
                     value={newData.tags ?
-                        TAG_LIST.filter(tag => newData.tags.map(ndt => ndt.title).includes(tag.title)) :
+                        allTags.filter(tag => newData.tags.map(ndt => ndt.title).includes(tag.title)) :
                         []}
                     onChange={(e, value) =>
                         handleInputChangeInAutocomplete("tags", value)}
@@ -172,7 +174,7 @@ function EditEntityDialog({initialData, setUpdateDialogOpened, open, allTags, al
                             label="Tags"
                         />
                     )}
-                />
+                />}
                 <Button style={{marginRight: '16px'}}
                     variant="contained"
                     component="label"
