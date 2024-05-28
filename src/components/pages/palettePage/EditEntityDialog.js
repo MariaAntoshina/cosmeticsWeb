@@ -61,7 +61,7 @@ function EditEntityDialog({initialData, setUpdateDialogOpened, open, allTags, al
 
     const handleInputChangeInAutocomplete = (fieldName, value) => {
         let updatedNewData = {...newData};
-        updatedNewData[fieldName] = value;
+        updatedNewData[fieldName] = value ? value[0] : {};
         setNewData(updatedNewData);
 
     }
