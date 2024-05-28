@@ -11,7 +11,7 @@ const ThreePalettesContainer = ({threePalettesArray, popupDeleteDialog, handleEd
 
     return (
 
-        <Grid  container spacing={2} mb={2} paddingBottom={4} style={{borderBottom: 'solid', borderColor: '#C0C0C0'}}>
+        <Grid  container spacing={2} mb={2} paddingBottom={20}>
 
             {threePalettesArray.map((i, k) => {
                 return <Grid  item xs={4} key={k}>

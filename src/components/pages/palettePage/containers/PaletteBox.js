@@ -10,7 +10,8 @@ export const PaletteBox = ({brand, name, image, description, rating, price, id, 
     return <Card style={{ maxWidth: '20vw',
         border: 'none', boxShadow: 'none',
         minHeight: '50vh', maxHeight:'50vh' , display: 'flex', flexDirection: 'column', height: '100%'}}>
-        <CardMedia component="img" image={image} alt={name} style={{ height: '30%', width: 'auto', objectFit: 'contain' }}
+        <CardMedia component="img" image={image} alt={name}
+                   style={{ height: '40%', width: 'auto', objectFit: 'contain' }}
 
         />
         <CardContent >
@@ -20,7 +21,9 @@ export const PaletteBox = ({brand, name, image, description, rating, price, id, 
             <Typography variant="h7" component="div">
                 {name}
             </Typography>
-            <Typography overflow={'scroll'} variant="body2" color="text.secondary" style={{ maxHeight: 100, minHeight: 100 }}>
+            <Typography overflow={'scroll'} variant="body2" color="text.secondary"
+                        // style={{ maxHeight: 100, minHeight: 100 }}
+            >
                 {description}
             </Typography>
 
