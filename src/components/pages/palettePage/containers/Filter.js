@@ -97,7 +97,7 @@ export const Filter = ({filterCriteria, setFilterCriteria, allTags, allBrands}) 
         </FormGroup>
 
         <FormControl component="fieldset">
-    <FormLabel id="demo-radio-buttons-group-label">Rating</FormLabel>
+    <Typography id="demo-radio-buttons-group-label">Rating</Typography>
 <RadioGroup
     aria-label="filter"
     name="filter"

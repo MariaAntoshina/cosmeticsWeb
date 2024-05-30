@@ -10,25 +10,35 @@ import {
     MenuItem
 } from '@mui/material';
 import {useEditDataMutation} from "../../../api/paltteApi";
-import {BRAND_LIST} from "../../../constants";
 import Box from "@mui/material/Box";
 
 function EditEntityDialog({initialData, setUpdateDialogOpened, open, allTags, allBrands}) {
+    console.log('initialData', initialData)
     const [editData] = useEditDataMutation();
 
     const [newData, setNewData] = useState(
         {
-            brand: [],
+            brand: {},
             name: "",
             description: "",
             rating: "",
-            price: "",
+            price: null,
             image: "",
             tags: []
         }
     );
     const [fileName, setFileName] = useState('');
-
+    const clear = () => {
+           setFileName('');
+           setNewData({
+               name: "",
+               description: "",
+               rating: "",
+               price: null,
+               image: "",
+               tags: []
+           });
+    }
 
     useEffect(() => {
         setNewData(initialData ? initialData : {})
@@ -83,10 +93,6 @@ function EditEntityDialog({initialData, setUpdateDialogOpened, open, allTags, al
         setUpdateDialogOpened(!open)
     }
 
- function test (newDataTags, allTags) {
-        debugger
-     return true
- }
 
 
     return (
@@ -100,14 +106,15 @@ function EditEntityDialog({initialData, setUpdateDialogOpened, open, allTags, al
                     id="brand-outlined"
                     options={allBrands}
                     getOptionLabel={(option) => {
-                        return option.title
+                        debugger
+                        return option?.title
                     }
                     }
 
                     value={newData.brand ?
                         allBrands
                             .filter(brand => {
-                                return brand.title === newData.brand?.title
+                                return brand?.title === newData?.brand?.title
                             })[0] :
                         {}}
 
@@ -204,8 +211,8 @@ function EditEntityDialog({initialData, setUpdateDialogOpened, open, allTags, al
                 <Box pt={1}>
                     <Button onClick={handleEdit} variant="contained" color="primary">Edit</Button>
                     <Button onClick={() => {
-                        setFileName("")
                         setUpdateDialogOpened(!open)
+                        clear()
                     }}>Cancel</Button>
                 </Box>
             </DialogContent>
